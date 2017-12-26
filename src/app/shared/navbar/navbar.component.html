@@ -1,0 +1,22 @@
+<app-toast [message]="toast.message"></app-toast>
+<nav class="navbar navbar-expand-lg fixed-top">
+  <a class="navbar-brand">YTO Admin</a>
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item dropdown" ngbDropdown>
+        <a class="nav-link" ngbDropdownToggle>
+          <i class="fa fa-user"></i> {{currentUser.nickname}}
+          <b class="caret"></b>
+        </a>
+        <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item">
+            <i class="fa fa-fw fa-user"></i> {{currentUser.username}}
+          </a>
+          <a class="dropdown-item" (click)="logout()">
+            <i class="fa fa-fw fa-power-off"></i> Log Out
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>

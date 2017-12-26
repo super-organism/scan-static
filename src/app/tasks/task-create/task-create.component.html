@@ -1,0 +1,90 @@
+<div class="card">
+  <h5 class="card-header">CREATE TASKS</h5>
+  <div class="card-body row">
+      <div class="card col-md-7">
+        <h6 class="card-header">SELECT POCS</h6>
+        <div class="card-body">
+          <table class="card-body table table-hover table-striped table-bordered">
+            <thead class="thead-inverse card-header">
+              <tr>
+                <th ngbDropdown>
+                  <a class="btn btn-outline-primary btn-block" id="filter" ngbDropdownToggle>TaskID</a>
+                  <div ngbDropdownMenu aria-labelledby="filter">
+                    <button class="dropdown-item">Action - 1</button>
+                    <button class="dropdown-item">Another Action</button>
+                    <button class="dropdown-item">Something else is here</button>
+                  </div>
+                </th>
+                <th ngbDropdown>
+                  <a class="btn btn-outline-primary btn-block" id="filter" ngbDropdownToggle>USER</a>
+                  <div ngbDropdownMenu aria-labelledby="filter">
+                    <button class="dropdown-item">Action - 1</button>
+                    <button class="dropdown-item">Another Action</button>
+                    <button class="dropdown-item">Something else is here</button>
+                  </div>
+                </th>
+                <th>
+                  <a class="btn btn-outline-primary btn-block" id="filter">Target</a>
+                </th>
+                <th ngbDropdown>
+                  <a class="btn btn-outline-primary btn-block" id="filter" ngbDropdownToggle>Status</a>
+                  <div ngbDropdownMenu aria-labelledby="filter">
+                    <button class="dropdown-item">Action - 1</button>
+                    <button class="dropdown-item">Another Action</button>
+                    <button class="dropdown-item">Something else is here</button>
+                  </div>
+                </th>
+                <th ngbDropdown>
+                  <a class="btn btn-outline-primary btn-block" id="filter" ngbDropdownToggle>Start Time</a>
+                  <div ngbDropdownMenu aria-labelledby="filter">
+                    <button class="dropdown-item">Action - 1</button>
+                    <button class="dropdown-item">Another Action</button>
+                    <button class="dropdown-item">Something else is here</button>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody *ngIf="pocs.length === 0">
+              <tr>
+                <td colspan="4">There are no cats in the DB. Add a new cat below.</td>
+              </tr>
+            </tbody>
+            <!-- <tbody>
+              <tr *ngFor="let task of tasks">
+                <th scope="row">{{task.taskid}}</th>
+                <td>{{task.username}}</td>
+                <td>{{task.target}}</td>
+                <td>{{task.status}}</td>
+                <td>{{task.startt}}</td>
+              </tr>
+            </tbody> -->
+          </table>
+        </div>
+      </div>
+      <div class="card col-md-5">
+        <h6 class="card-header">CREATE TARGET
+          <button type="button" (click)="addTarget()" class="btn btn-primary">add</button>
+        </h6>
+        <div class="card-body">
+          <form class="form" [formGroup]="taskForm" (ngSubmit)="submit()" novalidate>
+            <div formArrayName="targets">
+              <div class="form-group row" *ngFor="let target of targets.controls; let i=index">
+                <label for="inputPassword" class="col-sm-3 col-form-label">target</label>
+                <div class="col-sm-9">
+                  <input class="form-control" id="inputPassword" placeholder="Password" [formControlName]=i>
+                </div>
+                <button type="button" (click)="removeTarget(i)" class="btn btn-primary">remove</button>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="offset-sm-3 col-sm-9">
+                <button type="submit" class="btn btn-primary">Sign in</button>
+                <button type="submit" class="btn btn-primary">Sign up</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+  </div>
+
+</div>

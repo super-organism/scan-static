@@ -1,0 +1,58 @@
+<div class="card">
+  <h5 class="card-header">TASKS</h5>
+    <table class="card-body table table-hover table-striped table-bordered">
+      <thead class="thead-inverse card-header">
+        <tr>
+          <th ngbDropdown>
+            <a class="btn btn-outline-primary btn-block" id="filter" ngbDropdownToggle>TaskID</a>
+            <div ngbDropdownMenu aria-labelledby="filter">
+              <button class="dropdown-item">Action - 1</button>
+              <button class="dropdown-item">Another Action</button>
+              <button class="dropdown-item">Something else is here</button>
+            </div>
+          </th>
+          <th ngbDropdown>
+            <a class="btn btn-outline-primary btn-block" id="filter" ngbDropdownToggle>USER</a>
+            <div ngbDropdownMenu aria-labelledby="filter">
+              <button class="dropdown-item">Action - 1</button>
+              <button class="dropdown-item">Another Action</button>
+              <button class="dropdown-item">Something else is here</button>
+            </div>
+          </th>
+          <th>
+            <a class="btn btn-outline-primary btn-block" id="filter">Target</a>
+          </th>
+          <th ngbDropdown>
+            <a class="btn btn-outline-primary btn-block" id="filter" ngbDropdownToggle>Status</a>
+            <div ngbDropdownMenu aria-labelledby="filter">
+              <button class="dropdown-item">Action - 1</button>
+              <button class="dropdown-item">Another Action</button>
+              <button class="dropdown-item">Something else is here</button>
+            </div>
+          </th>
+          <th ngbDropdown>
+            <a class="btn btn-outline-primary btn-block" id="filter" ngbDropdownToggle>Start Time</a>
+            <div ngbDropdownMenu aria-labelledby="filter">
+              <button class="dropdown-item">Action - 1</button>
+              <button class="dropdown-item">Another Action</button>
+              <button class="dropdown-item">Something else is here</button>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody *ngIf="tasks.length === 0">
+        <tr>
+          <td colspan="4">There are no cats in the DB. Add a new cat below.</td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr *ngFor="let task of tasks">
+          <th scope="row">{{task.taskid}}</th>
+          <td>{{task.username}}</td>
+          <td>{{task.target}}</td>
+          <td>{{task.status}}</td>
+          <td>{{task.startt}}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
