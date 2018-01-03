@@ -6,9 +6,10 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./toast.component.scss']
 })
 export class ToastComponent {
-  @Input() message = { body: '', type: '' };
+  @Input() message = { title:'', body: '', type: '' };
 
-  setMessage(body, type, time = 3000) {
+  setMessage(title, body, type, time = 2000) {
+    this.message.title = title;
     this.message.body = body;
     this.message.type = type;
     setTimeout(() => { this.message.body = ''; }, time);

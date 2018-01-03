@@ -12,12 +12,16 @@ export class AuthInterceptor implements HttpInterceptor {
         const auth = this.injector.get(AuthService);
         const token = auth.getToken();
         if(token){
-            const JWT = `Bearer ${token}`;
-            req = req.clone({
-                setHeaders: {
-                    Authorization: JWT,
-                },
-            });
+            if (!auth.isTokenExpired()){
+                const JWT = `Bearer ${token}`;
+                req = req.clone({
+                    setHeaders: {
+                        Authorization: JWT,
+                    },
+                });
+            }else{
+                auth.deleteToken()
+            }
         }
         return next.handle(req);
     }

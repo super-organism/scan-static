@@ -6,7 +6,7 @@ import { SigninComponent } from './signin/signin.component';
 import { RepswdComponent } from './repswd/repswd.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'signup' },
+  { path: '', redirectTo: 'signin' },
   { path: 'signup', component: SignupComponent },
   { path: 'signin', component: SigninComponent },
   { path: 'reset', component: RepswdComponent },

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Group } from '../shared/group.model';
 import { User } from '../shared/user.model';
 import { JwtHelper } from 'angular2-jwt';
+import { Timestamp } from 'rxjs/operators/timestamp';
 
 @Injectable()
 export class AuthService {
@@ -34,6 +35,12 @@ export class AuthService {
     const token = localStorage.getItem('token');
     const user = jwtHelper.decodeToken(token)
     return this.http.get<User>(`api/users/${user.uid}/`);
+  }
+
+  isTokenExpired(){
+    let jwtHelper: JwtHelper = new JwtHelper();
+    const token = localStorage.getItem('token');
+    return jwtHelper.isTokenExpired(token)
   }
 
   saveToken(token){

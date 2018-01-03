@@ -1,49 +1,55 @@
 <app-toast [message]="toast.message"></app-toast>
-<div class="card">
-  <h4 class="card-header">SignUp</h4>
-  <div class="card-body">
-    <form class="form" [formGroup]="signUpForm" (ngSubmit)="submit()" novalidate>
-      <div class="form-group row">
-        <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
-        <div class="col-sm-9">
-          <input type="email" class="form-control" id="inputEmail" placeholder="Email" formControlName="email" autofocus>
-          <!-- <div [hidden]="!email.pristine && !email.valid" class="alert alert-danger">Email is required</div> -->
+<div class="login-page">
+  <div class="row justify-content-md-center">
+    <div class=" col-sm-5">
+      <img src="assets/images/logo.png" width="150px" class="user-avatar" />
+      <h1>YTO SCANNER</h1>
+      <div class="card">
+        <h4 class="card-header text-success">SignUp</h4>
+        <div class="card-body">
+          <form class="form" [formGroup]="signUpForm" (ngSubmit)="submit()" novalidate>
+            <div class="form-group">
+                <input type="email" class="form-control" id="inputEmail" placeholder="Email" formControlName="email" autofocus>
+                <div class="form-control-feedback" *ngIf="email.invalid && !email.pristine">
+                  <p class="text-warning" *ngIf="email.errors.required">Email is required</p>
+                  <p class="text-warning" *ngIf="email.errors.validateEmail">Must a YTO Email</p>
+                </div>
+            </div>
+            <div class="form-group" [formGroup]="passwordGroup">
+              <div class="form-group">
+                  <input type="password" class="form-control" id="inputPassword" placeholder="Password" formControlName="password">
+                  <div class="form-control-feedback" *ngIf="password.invalid && !password.pristine">
+                    <p class="text-warning" *ngIf="password.errors.required">Password is required.</p>
+                    <p class="text-warning" *ngIf="password.errors.minlength||password.errors.maxlength">Password should be consist of 6 characters.</p>
+                  </div>
+                </div>
+              <div class="form-group">
+                  <input type="password" class="form-control" id="inputRePassword" placeholder="RePassword" formControlName="repassword">
+                </div>
+            <div class="col-md-12" [class.has-danger]="passwordGroup.invalid">
+              <div class="form-control-feedback" *ngIf="passwordGroup.invalid">
+                <p class="text-warning" *ngIf="passwordGroup.hasError('mismatch')">Passwords are mismatched.</p>
+              </div>
+            </div>
+            </div>
+            <div class="form-group row">
+              <input type="text" class="form-control offset-sm-1 col-sm-4" id="inputNickname" placeholder="Nickname" formControlName="nickname">
+              <select class="form-control offset-sm-2 col-sm-4" id="usergroup" name="usergroup" formControlName="usergroup">
+                <option *ngFor="let group of groups; let i = index" value="{{group.id}}" [selected]="i == 0">{{group.name}}</option>
+              </select>
+            </div>
+            <div class="form-group row">
+              <div class="offset-sm-2 col-sm-3">
+                <button type="submit" class="btn btn-primary">Sign up</button>
+              </div>
+              <div class="offset-sm-2 col-sm-3">
+                <button type="button" class="btn btn-primary" [routerLink]="['/auth', 'signin']">Sign in</button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
-      <div class="form-group" [formGroup]="passwordGroup">
-        <div class="form-group row">
-          <label for="inputPassword" class="col-sm-3 col-form-label">Password</label>
-          <div class="col-sm-9">
-            <input type="password" class="form-control" id="inputPassword" placeholder="Password" formControlName="password">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="inputRePassword" class="col-sm-3 col-form-label">RePassword</label>
-          <div class="col-sm-9">
-            <input type="password" class="form-control" id="inputRePassword" placeholder="RePassword" formControlName="repassword">
-          </div>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inputNickname" class="col-sm-3 col-form-label">Nickname</label>
-        <div class="col-sm-4">
-          <input type="text" class="form-control" id="inputNickname" placeholder="Nickname" formControlName="nickname">
-        </div>
-        <label for="inputUsergroup" class="col-sm-2 col-form-label">Group</label>
-        <div class="col-sm-3">
-            <select class="form-control" id="usergroup" name="usergroup" formControlName="usergroup">
-              <option *ngFor="let group of groups" value="{{group.id}}">{{group.name}}</option>
-            </select>
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="offset-sm-3 col-sm-3">
-          <button type="submit" class="btn btn-primary">Sign up</button>
-        </div>
-        <div class="offset-sm-2 col-sm-3">
-          <button type="submit" class="btn btn-primary">Sign in</button>
-        </div>
-      </div>
-    </form>
+    </div>
   </div>
 </div>
+

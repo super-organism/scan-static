@@ -9,13 +9,19 @@
           <b class="caret"></b>
         </a>
         <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item">
-            <i class="fa fa-fw fa-user"></i> {{currentUser.username}}
+          <a class="dropdown-item" [routerLink]="['/auth', 'reset']">
+            <i class="fa fa-fw fa-key"></i> RESET PWD
           </a>
           <a class="dropdown-item" (click)="logout()">
             <i class="fa fa-fw fa-power-off"></i> Log Out
           </a>
         </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link">
+          <i class="fa fa-envelope-o"></i> {{currentUser.username}}
+          <b class="caret"></b>
+        </a>
       </li>
     </ul>
   </div>

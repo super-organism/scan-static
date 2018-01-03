@@ -1,25 +1,37 @@
+<app-navbar></app-navbar>
 <app-toast [message]="toast.message"></app-toast>
-<div class="card">
-  <h4 class="card-header">ReSetPassword</h4>
-  <div class="card-body">
-    <form class="form" [formGroup]="rePswdForm" (ngSubmit)="submit()" novalidate>
-      <div class="form-group row">
-        <label for="inputPassword" class="col-sm-3 col-form-label">Password</label>
-        <div class="col-sm-9">
-          <input type="password" class="form-control" id="inputPassword" placeholder="Password" formControlName="password">
-        </div>
+<div class="login-page">
+  <div class="row justify-content-md-center">
+    <div class="card col-sm-5 center-vertical">
+      <h4 class="card-header  text-success">ReSetPassword</h4>
+      <div class="card-body">
+        <form class="form" [formGroup]="rePswdForm" (ngSubmit)="submit()" novalidate>
+          <div class="form-group">
+              <input type="password" class="form-control" id="inputPassword" placeholder="Password" formControlName="password">
+              <div class="form-control-feedback" *ngIf="password.invalid && !password.pristine">
+                <p class="text-warning" *ngIf="password.errors.required">Password is required.</p>
+                <p class="text-warning" *ngIf="password.errors.minlength||password.errors.maxlength">Password should be consist of 6 characters.</p>
+              </div>
+          </div>
+          <div class="form-group ">
+              <input type="password" class="form-control" id="inputRePassword" placeholder="RePassword" formControlName="repassword">
+          </div>
+          <div class="col-md-12" [class.has-danger]="rePswdForm.invalid">
+            <div class="form-control-feedback" *ngIf="rePswdForm.invalid">
+              <p class="text-warning" *ngIf="rePswdForm.hasError('mismatch')">Passwords are mismatched.</p>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="offset-sm-2 col-sm-3">
+              <button type="submit" class="btn btn-primary">RE SET</button>
+            </div>
+            <div class="offset-sm-2 col-sm-3">
+              <button type="button" class="btn btn-primary" [routerLink]="['/home', 'list']">RETURN</button>
+            </div>
+          </div>
+        </form>
       </div>
-      <div class="form-group row">
-        <label for="inputRePassword" class="col-sm-3 col-form-label">RePassword</label>
-        <div class="col-sm-9">
-          <input type="password" class="form-control" id="inputRePassword" placeholder="RePassword" formControlName="repassword">
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="offset-sm-3 col-sm-9">
-          <button type="submit" class="btn btn-primary">Re Set</button>
-        </div>
-      </div>
-    </form>
+    </div>
   </div>
+
 </div>

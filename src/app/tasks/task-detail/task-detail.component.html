@@ -1,3 +1,71 @@
-<p>
-  task-detail works!
-</p>
+<div class = "card">
+  <div class = "card-header">
+      <h5 class="card-header">
+        TASK DETIAL
+        <a class="pull-right" [routerLink]="['/home', 'list']">RETURN TASKS</a>
+      </h5>
+      <div class="card-header">
+        <a class="btn btn-danger">DANGER:<span class="badge badge-info">{{task.resultcount}}</span></a>
+        <a class="btn btn-outline-primary">ALL:<span class="badge badge-info">{{task.items.length}}</span></a>
+        <button type="button" [disabled]="task.status ==='OVER'" (click)="UpdateTask(task)" class="btn btn-primary pull-right">
+            <i *ngIf="task.status === 'RUNNING'" class="fa fa-pause"></i>
+            <i *ngIf="task.status === 'STOP'" class="fa fa-play"></i>
+            <i *ngIf="task.status === 'OVER'" class="fa fa-check-square-o"></i>
+        </button>
+
+      </div>
+        <div class="card-header">
+            target : {{task.target}}
+        </div>
+  </div>
+  <div class="card-body">
+    <table class="card-body table table-hover table-striped table-bordered text-center">
+        <thead class="thead-inverse card-header">
+            <tr>
+                <th width="5%">
+                    <a class="btn btn-outline-primary btn-block">Option</a>
+                </th>
+                <th width="30%">
+                    <a class="btn btn-outline-primary btn-block">ItemID</a>
+                </th>
+                <th width="30%">
+                    <a class="btn btn-outline-primary btn-block">Poc Name</a>
+                </th>
+                <th width="10%">
+                    <a class="btn btn-outline-primary btn-block">Result</a>
+                </th>
+                <th width="10%">
+                    <a class="btn btn-outline-primary btn-block">Status</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of task.items"  [ngClass]="setClass(item)">
+                <td><button type="button" [disabled]="item.status ==='OVER'" (click)="UpdateItem(item)" class="btn btn-primary">
+                    <i *ngIf="item.status === 'RUNNING'" class="fa fa-pause"></i>
+                    <i *ngIf="item.status === 'STOP'" class="fa fa-play"></i>
+                    <i *ngIf="item.status === 'OVER'" class="fa fa-check-square-o"></i>
+                </button></td>
+                <td>{{item.itemid}}</td>
+                <td>
+                    <a [routerLink]="['/home', 'pocs',item.poc.puid]">{{item.poc.name}}</a>
+                </td>
+                <td>
+                    <span *ngIf="item.result" class="btn btn-danger">HAS DANGEAR</span>
+                    <span *ngIf="!item.result" class="btn btn-success">NO DANGEAR</span>
+                </td>
+                <td>
+                    <i *ngIf="item.status === 'RUNNING'" class="fa fa-spinner fa-pulse fa-2x"></i>
+                    <i *ngIf="item.status === 'STOP'" class="fa fa-stop fa-2x"></i>
+                    <i *ngIf="item.status === 'OVER'" class="fa fa-check-square fa-2x"></i>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+  </div>
+  <div class="card-footer">
+     START TIME : {{task.startt |date:'yyyy-MM-dd HH:mm:ss'}}
+    <i class="pull-right" *ngIf="task.status === 'OVER'">DONE TIME : {{task.doneat | date:'yyyy-MM-dd HH:mm:ss'}}</i>
+  </div>
+</div>

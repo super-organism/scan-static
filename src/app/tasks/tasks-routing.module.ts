@@ -5,7 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { TaskListComponent } from './task-list/task-list.component';
 import { TaskCreateComponent } from './task-create/task-create.component';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
-
+import { PocsComponent } from './pocs/pocs.component';
 const routes: Routes = [
   { 
     path: '', component: HomeComponent,
@@ -19,8 +19,12 @@ const routes: Routes = [
         component: TaskCreateComponent,
       },
       {
-        path: 'detail',
+        path: 'detail/:id',
         component: TaskDetailComponent,
+      },
+      {
+        path: 'pocs/:id',
+        component: PocsComponent,
       }
     ]
  },

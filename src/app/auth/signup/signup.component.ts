@@ -38,7 +38,7 @@ export class SignupComponent implements OnInit {
     Validators.maxLength(30),
     Validators.pattern('[a-zA-Z0-9_-\\s]*')
   ]);
-  usergroup = new FormControl('', [
+  usergroup = new FormControl('1', [
     Validators.required
   ]);
 
@@ -47,7 +47,7 @@ export class SignupComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private toast: ToastComponent
+    public toast: ToastComponent
 
   ) { }
 
@@ -101,20 +101,20 @@ export class SignupComponent implements OnInit {
     this.authService.signUp(this.user).subscribe(
       res => {
         this.authService.saveToken(res.token);
-        this.toast.setMessage('you successfully registered ,going to home!', 'success');
-        setTimeout(() => { this.router.navigate(['/home']); }, 2000);
+        this.toast.setMessage('Message','you successfully registered ,going to home!', 'success');
+        setTimeout(() => { this.router.navigate(['/home','list']); }, 2000);
       },
       error => { 
         if (error.error instanceof Array) {
           for (let index = 0; index < error.length; index++) {
             const element = error[index];
-            this.toast.setMessage(element, 'danger')
+            this.toast.setMessage('Message', element, 'danger')
           }
         }else{
           for (const key in error.error) {
             if (error.error.hasOwnProperty(key)) {
               const element = error.error[key];
-              this.toast.setMessage(element, 'danger')
+              this.toast.setMessage(key,element, 'danger')
             }
           }
         }

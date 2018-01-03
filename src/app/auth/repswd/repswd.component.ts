@@ -29,7 +29,7 @@ export class RepswdComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private toast: ToastComponent
+    public toast: ToastComponent
   ) { }
 
   ngOnInit() {
@@ -47,7 +47,7 @@ export class RepswdComponent implements OnInit {
     this.authService.reSetPasswd(this.rePswdForm.value.password).subscribe(
       res => {
         this.authService.saveToken(res.token);
-        this.toast.setMessage('you successfully registered!', 'success');
+        this.toast.setMessage('Message','you successfully registered!', 'success');
         this.router.navigate(['/home']);
       },
       error => {
@@ -55,13 +55,13 @@ export class RepswdComponent implements OnInit {
         if (error.error instanceof Array) {
           for (let index = 0; index < error.error.length; index++) {
             const element = error.error[index];
-            this.toast.setMessage(element, 'danger')
+            this.toast.setMessage('Message',element, 'danger')
           }
         } else {
           for (const key in error.error) {
             if (error.error.hasOwnProperty(key)) {
               const element = error.error[key];
-              this.toast.setMessage(element, 'danger')
+              this.toast.setMessage(key,element, 'danger')
             }
           }
         }

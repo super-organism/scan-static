@@ -1,0 +1,46 @@
+$topnav-background-color: #222;
+:host {
+  display: block;
+}
+
+.login-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  background: $topnav-background-color;
+  text-align: center;
+  color: #fff;
+  padding: 3em;
+  h1 {
+    font-weight: 300;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 36px;
+    small {
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
+  .user-avatar {
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    border: 2px solid #fff;
+  }
+}
+
+
+
+.col-center-block {
+  float: none;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.center-vertical {
+  position: relative;
+  top: 50%;
+  transform: translateY(30%);
+}

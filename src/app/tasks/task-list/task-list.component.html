@@ -1,58 +1,64 @@
 <div class="card">
   <h5 class="card-header">TASKS</h5>
-    <table class="card-body table table-hover table-striped table-bordered">
-      <thead class="thead-inverse card-header">
-        <tr>
-          <th ngbDropdown>
-            <a class="btn btn-outline-primary btn-block" id="filter" ngbDropdownToggle>TaskID</a>
-            <div ngbDropdownMenu aria-labelledby="filter">
-              <button class="dropdown-item">Action - 1</button>
-              <button class="dropdown-item">Another Action</button>
-              <button class="dropdown-item">Something else is here</button>
-            </div>
-          </th>
-          <th ngbDropdown>
-            <a class="btn btn-outline-primary btn-block" id="filter" ngbDropdownToggle>USER</a>
-            <div ngbDropdownMenu aria-labelledby="filter">
-              <button class="dropdown-item">Action - 1</button>
-              <button class="dropdown-item">Another Action</button>
-              <button class="dropdown-item">Something else is here</button>
-            </div>
-          </th>
-          <th>
-            <a class="btn btn-outline-primary btn-block" id="filter">Target</a>
-          </th>
-          <th ngbDropdown>
-            <a class="btn btn-outline-primary btn-block" id="filter" ngbDropdownToggle>Status</a>
-            <div ngbDropdownMenu aria-labelledby="filter">
-              <button class="dropdown-item">Action - 1</button>
-              <button class="dropdown-item">Another Action</button>
-              <button class="dropdown-item">Something else is here</button>
-            </div>
-          </th>
-          <th ngbDropdown>
-            <a class="btn btn-outline-primary btn-block" id="filter" ngbDropdownToggle>Start Time</a>
-            <div ngbDropdownMenu aria-labelledby="filter">
-              <button class="dropdown-item">Action - 1</button>
-              <button class="dropdown-item">Another Action</button>
-              <button class="dropdown-item">Something else is here</button>
-            </div>
-          </th>
-        </tr>
-      </thead>
-      <tbody *ngIf="tasks.length === 0">
-        <tr>
-          <td colspan="4">There are no cats in the DB. Add a new cat below.</td>
-        </tr>
-      </tbody>
-      <tbody>
-        <tr *ngFor="let task of tasks">
-          <th scope="row">{{task.taskid}}</th>
-          <td>{{task.username}}</td>
-          <td>{{task.target}}</td>
-          <td>{{task.status}}</td>
-          <td>{{task.startt}}</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="card-header">
+    <button type="button" [routerLink]="['/home', 'create']" class="btn btn-primary">NEW TASK <i class="fa fa-plus"></i></button>
+    <a class="btn btn-outline-primary  pull-right"><i class="fa fa-tasks"></i><span class="badge badge-info"> {{task_count.all}}</span></a>
+    <a class="btn btn-outline-primary  pull-right"><i class="fa fa-check-square-o"></i><span class="badge badge-info"> {{task_count.over}}</span></a>
+    <a class="btn btn-outline-primary  pull-right"><i class="fa fa-stop"></i><span class="badge badge-info"> {{task_count.stop}}</span></a>
+  </div>
+  <table class="card-body table table-hover table-striped table-bordered text-center">
+    <thead class="thead-inverse card-header">
+      <tr>
+        <th width="5%">
+          <a class="btn btn-outline-primary btn-block">Option</a>
+        </th>
+        <th width="30%">
+          <a class="btn btn-outline-primary btn-block">TaskID</a>
+        </th>
+        <th width="15%">
+          <a class="btn btn-outline-primary btn-block">USER</a>
+        </th>
+        <th width="30%">
+          <a class="btn btn-outline-primary btn-block">Target</a>
+        </th>
+        <th ngbDropdown width="5%">
+          <a class="btn btn-outline-primary btn-block" id="Statusfilter" ngbDropdownToggle>Status</a>
+          <div ngbDropdownMenu aria-labelledby="Statusfilter">
+            <button class="dropdown-item" (click)="setFilter('status','ALL')"><span class="badge badge-info">ALL<i class="fa fa-tasks"></i></span></button>
+            <button class="dropdown-item" (click)="setFilter('status','OVER')"><span class="badge badge-info">OVER<i class="fa fa-check-square-o"></i></span></button>
+            <button class="dropdown-item" (click)="setFilter('status','RUNNING')"><span class="badge badge-info">RUN<i class="fa fa-spinner"></i></span></button>
+            <button class="dropdown-item" (click)="setFilter('status','STOP')"><span class="badge badge-info">STOP<i class="fa fa-stop"></i></span></button>
+          </div>
+        </th>
+        <th width="15%">
+          <a class="btn btn-outline-primary btn-block">START TIME</a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of tasks" [ngClass]="setClass(task)">
+        <td>
+          <button type="button" [disabled]="task.status ==='OVER'" (click)="UpdateTask(task)" class="btn btn-primary">
+            <i *ngIf="task.status === 'RUNNING'" class="fa fa-pause"></i>
+            <i *ngIf="task.status === 'STOP'" class="fa fa-play"></i>
+            <i *ngIf="task.status === 'OVER'" class="fa fa-check-square-o"></i>
+          </button>
+        </td>
+        <td>
+          <a [routerLink]="['/home', 'detail',task.taskid]">{{task.taskid}}</a>
+        </td>
+        <td>{{task.username}}</td>
+        <td>{{task.target}}</td>
+        <td>
+          <i *ngIf="task.status === 'RUNNING'" class="fa fa-spinner fa-pulse fa-2x"></i>
+          <i *ngIf="task.status === 'STOP'" class="fa fa-stop fa-2x"></i>
+          <i *ngIf="task.status === 'OVER'" class="fa fa-check-square fa-2x"></i>
+        </td>
+        <td>{{task.startt |date:'yyyy-MM-dd HH:mm:ss'}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="card-footer">
+    <ngb-pagination [collectionSize]="collectionSize" [(page)]="filter.page" (pageChange) ="changePage()" ></ngb-pagination>
+  </div>
 </div>

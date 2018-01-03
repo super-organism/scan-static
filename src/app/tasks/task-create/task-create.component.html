@@ -1,89 +1,113 @@
 <div class="card">
-  <h5 class="card-header">CREATE TASKS</h5>
+  <h5 class="card-header">CREATE TASKS
+    <a class="pull-right" [routerLink]="['/home', 'list']">RETURN TASKS</a>
+  </h5>
   <div class="card-body row">
       <div class="card col-md-7">
-        <h6 class="card-header">SELECT POCS</h6>
+        <div class="card-header">
+        <div class="form-inline row">
+          <div class="form-group col-md-8">
+            <div class="row">
+              <div class="input-group col-md-6">
+                <span class="input-group-addon">FROM:</span>
+                <input class="form-control" placeholder="yyyy-mm-dd" name="from" [(ngModel)]="selectfrom" (ngModelChange)="setFilter('From',selectfrom)"
+                  ngbDatepicker #from="ngbDatepicker">
+                <button class="input-group-addon" (click)="from.toggle()" type="button">
+                  <i class="fa fa-calendar"></i>
+                </button>
+              </div>
+              <div class="input-group col-md-6">
+                <span class="input-group-addon">TO:</span>
+                <input class="form-control" placeholder="yyyy-mm-dd" name="to" [(ngModel)]="selectto" (ngModelChange)="setFilter('To',selectto)"
+                  ngbDatepicker #to="ngbDatepicker">
+                <button class="input-group-addon" (click)="to.toggle()" type="button">
+                  <i class="fa fa-calendar"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+          <div class="form-group col-md-4">
+            <div class="input-group">
+              <input type="text" class="form-control" [(ngModel)]="pocfilter.searchkey" placeholder="Search for...">
+              <span class="input-group-btn">
+                <button (click)="setFilter('Search',pocfilter.searchkey)" class="btn btn-primary">
+                  <i class="fa fa-search"></i>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
         <div class="card-body">
-          <table class="card-body table table-hover table-striped table-bordered">
+          <table class="card-body table table-hover table-striped table-bordered text-center">
             <thead class="thead-inverse card-header">
               <tr>
+                <th class="btn-outline-primary">
+                  <input class="form-group" type="checkbox" [(ngModel)]="selectedAll" (change)="selectAll();" />
+                </th>
+                <th>
+                  <a class="btn btn-outline-primary btn-block">Poc Name</a>
+                </th>
                 <th ngbDropdown>
-                  <a class="btn btn-outline-primary btn-block" id="filter" ngbDropdownToggle>TaskID</a>
-                  <div ngbDropdownMenu aria-labelledby="filter">
-                    <button class="dropdown-item">Action - 1</button>
-                    <button class="dropdown-item">Another Action</button>
-                    <button class="dropdown-item">Something else is here</button>
+                  <a class="btn btn-outline-primary btn-block" id="VulnCate" ngbDropdownToggle>VulnCate</a>
+                  <div ngbDropdownMenu aria-labelledby="VulnCate">
+                    <button (click)="setFilter('Vuln','')" class="dropdown-item">All</button>
+                    <button *ngFor="let v of VulnCate" (click)="setFilter('Vuln',v.name)" class="dropdown-item">{{v.name}}</button>
                   </div>
                 </th>
                 <th ngbDropdown>
-                  <a class="btn btn-outline-primary btn-block" id="filter" ngbDropdownToggle>USER</a>
-                  <div ngbDropdownMenu aria-labelledby="filter">
-                    <button class="dropdown-item">Action - 1</button>
-                    <button class="dropdown-item">Another Action</button>
-                    <button class="dropdown-item">Something else is here</button>
+                  <a class="btn btn-outline-primary btn-block" id="PlatCate" ngbDropdownToggle>PlatCate</a>
+                  <div ngbDropdownMenu aria-labelledby="PlatCate">
+                    <button (click)="setFilter('Plat','')" class="dropdown-item">All</button>
+                    <button *ngFor="let p of PlatCate" (click)="setFilter('Plat',p.name)" class="dropdown-item">{{p.name}}</button>
                   </div>
                 </th>
                 <th>
-                  <a class="btn btn-outline-primary btn-block" id="filter">Target</a>
-                </th>
-                <th ngbDropdown>
-                  <a class="btn btn-outline-primary btn-block" id="filter" ngbDropdownToggle>Status</a>
-                  <div ngbDropdownMenu aria-labelledby="filter">
-                    <button class="dropdown-item">Action - 1</button>
-                    <button class="dropdown-item">Another Action</button>
-                    <button class="dropdown-item">Something else is here</button>
-                  </div>
-                </th>
-                <th ngbDropdown>
-                  <a class="btn btn-outline-primary btn-block" id="filter" ngbDropdownToggle>Start Time</a>
-                  <div ngbDropdownMenu aria-labelledby="filter">
-                    <button class="dropdown-item">Action - 1</button>
-                    <button class="dropdown-item">Another Action</button>
-                    <button class="dropdown-item">Something else is here</button>
-                  </div>
+                  <a class="btn btn-outline-primary btn-block">Open Time</a>
                 </th>
               </tr>
             </thead>
-            <tbody *ngIf="pocs.length === 0">
-              <tr>
-                <td colspan="4">There are no cats in the DB. Add a new cat below.</td>
+            <tbody>
+              <tr *ngFor="let poc of pocs">
+                <td><input type="checkbox" [(ngModel)]="poc.selected" (change)="selectTo(poc);"></td>
+                <td><a [routerLink]="['/home', 'pocs',poc.puid]">{{poc.name}}</a></td>
+                <td>{{poc.vulncate}}</td>
+                <td>{{poc.platcate}}</td>
+                <td>{{poc.opentime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
               </tr>
             </tbody>
-            <!-- <tbody>
-              <tr *ngFor="let task of tasks">
-                <th scope="row">{{task.taskid}}</th>
-                <td>{{task.username}}</td>
-                <td>{{task.target}}</td>
-                <td>{{task.status}}</td>
-                <td>{{task.startt}}</td>
-              </tr>
-            </tbody> -->
           </table>
+          <div class="card-footer">
+            <ngb-pagination [collectionSize]="poccount" [(page)]="pocfilter.page" (pageChange)="changePage()"></ngb-pagination>
+          </div>
         </div>
       </div>
       <div class="card col-md-5">
-        <h6 class="card-header">CREATE TARGET
-          <button type="button" (click)="addTarget()" class="btn btn-primary">add</button>
-        </h6>
-        <div class="card-body">
-          <form class="form" [formGroup]="taskForm" (ngSubmit)="submit()" novalidate>
-            <div formArrayName="targets">
-              <div class="form-group row" *ngFor="let target of targets.controls; let i=index">
-                <label for="inputPassword" class="col-sm-3 col-form-label">target</label>
-                <div class="col-sm-9">
-                  <input class="form-control" id="inputPassword" placeholder="Password" [formControlName]=i>
-                </div>
-                <button type="button" (click)="removeTarget(i)" class="btn btn-primary">remove</button>
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="offset-sm-3 col-sm-9">
-                <button type="submit" class="btn btn-primary">Sign in</button>
-                <button type="submit" class="btn btn-primary">Sign up</button>
-              </div>
-            </div>
-          </form>
+        <div class="card-header">
+          CREATE TARGET
+          <button type="button" (click)="addTarget()" class="btn btn-primary pull-right">
+            <i class="fa fa-plus"></i>
+          </button>
         </div>
+      <form class="form" [formGroup]="taskForm" (ngSubmit)="submit()" novalidate>
+        <div formArrayName="targets" class="card-body">
+          <div class="form-group" *ngFor="let target of targets.controls; let i=index">
+            <div class="input-group">
+              <span class="input-group-addon">TARGET[{{i+1}}] </span>
+              <input class="form-control" placeholder="http://www.exp.com/" [formControl]=target>
+              <button type="button" (click)="removeTarget(i)" class="btn btn-primary"><i class="fa fa-minus"></i></button>
+            </div>
+            <div class="form-control-feedback" *ngIf="target.invalid && !target.pristine">
+              <p *ngIf="target.errors.required">target is required</p>
+              <p *ngIf="target.errors.validateTarget">target is invalid</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer text-center">
+          <button type="submit" [disabled]="taskForm.invalid || taskForm.pending" class="btn btn-primary">CREATE</button>
+        </div>
+      </form>
       </div>
   </div>
 
